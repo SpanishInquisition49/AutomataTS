@@ -5,18 +5,21 @@ expect.extend({toHaveBeenCalledBefore, toHaveBeenCalledAfter});
 
 const enteringMock = jest.fn()
 const leavingMock = jest.fn()
-const fromState: State<number> = { label: 0, isFinal: false, leavingHook:leavingMock, enteringHook:enteringMock }
-const toState: State<number> = { label: 1, isFinal: false, enteringHook:enteringMock }
+const fromState = new State(0, enteringMock, leavingMock )
+const toState = new State(1, enteringMock)
 const evt = jest.fn().mockReturnValue(true)
 const act = jest.fn()
 const transition = new Transition(fromState, toState, evt, act)
 
 describe('State', () => {
-    test('Should be defined', () => {
-        const state = new State(0, leavingMock, enteringMock, false)
-        const state2 = new State(0)
+    test('Should be equal to fromState', () => {
+        const state = new State(0, enteringMock, leavingMock)
         expect(state).toEqual(fromState)
-        expect(state2).toEqual({label:0, isFinal: false})
+    })
+    
+    test('Should Create a State labeled with 0 and not final', () => {
+        const state2 = new State(0)
+        expect(state2).toEqual({label:0, isFinal: false, enteringHook: null, leavingHook: null} as State<number>)
     })
 })
 
