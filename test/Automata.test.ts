@@ -1,6 +1,6 @@
-import { Automata, State, StateError, Transition } from "./Automata";
+import { Automata, State, StateError, Transition } from "../src/Automata";
 //@ts-ignore
-import {toHaveBeenCalledBefore, toHaveBeenCalledAfter} from 'jest-extended';
+import {toHaveBeenCalledBefore, toHaveBeenCalledAfter} from '../node_modules/jest-extended'
 expect.extend({toHaveBeenCalledBefore, toHaveBeenCalledAfter});
 
 const enteringMock = jest.fn()
@@ -11,6 +11,14 @@ const evt = jest.fn().mockReturnValue(true)
 const act = jest.fn()
 const transition = new Transition(fromState, toState, evt, act)
 
+describe('State', () => {
+    test('Should be defined', () => {
+        const state = new State(0, leavingMock, enteringMock, false)
+        const state2 = new State(0)
+        expect(state).toEqual(fromState)
+        expect(state2).toEqual({label:0, isFinal: false})
+    })
+})
 
 describe('Transition', () => {
     test('Should be defined', () => {

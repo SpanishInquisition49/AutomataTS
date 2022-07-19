@@ -10,11 +10,18 @@ export class StateError extends Error {
 }
 
 
-export interface State<t> {
+export class State<t> {
     label: t
     isFinal: boolean
     enteringHook?: action
     leavingHook?: action
+
+    constructor(label: t, enteringHook: action = null, leavingHook: action = null, isFinal = false) {
+        this.label = label
+        this.isFinal = isFinal
+        this.enteringHook = enteringHook
+        this.leavingHook = leavingHook
+    }
 }
 
 export class Transition<t,e> {
@@ -49,13 +56,10 @@ export class Automata<t,e> {
         this.states = states
         this.transitions = transitions
         this.initial = initialState
-        this.init()
-
+        this.currentState = this.initial
     }
 
     get CurrentState() { return this.currentState }
-
-    private init = async (): Promise<void> => { this.currentState = this.initial }
 
     private hasState = (s:State<t>): boolean => {
         for(let state of this.states)

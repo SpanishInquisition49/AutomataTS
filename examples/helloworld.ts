@@ -1,4 +1,4 @@
-import {action, Automata, State, Transition} from './Automata'
+import { action, Automata, State, Transition } from '../src/Automata'
 
 const states: State<number>[] = [
     {label: 0, isFinal: false},
