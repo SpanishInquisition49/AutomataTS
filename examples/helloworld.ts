@@ -1,18 +1,17 @@
 import { action, Automata, State, Transition } from '../src/Automata'
 
 const states: State<number>[] = [
-    {label: 0, isFinal: false},
-    {label: 1, isFinal: false},
-    {label: 2, isFinal: false},
-    {label: 3, isFinal: false},
-    {label: 4, isFinal: false},
-    {label: 5, isFinal: false},
-    {label: 6, isFinal: false},
-    {label: 7, isFinal: false},
-    {label: 8, isFinal: false},
-    {label: 9, isFinal: false},
-    {label: 10, isFinal: false},
-    {label: 11, isFinal: true},
+    new State(0),
+    new State(2),
+    new State(3),
+    new State(4),
+    new State(5),
+    new State(6),
+    new State(7),
+    new State(8),
+    new State(9),
+    new State(10),
+    new State(11),
 ]
 const printChar: action = (label: number) => {
     nextStateNumber++
@@ -53,7 +52,6 @@ const printChar: action = (label: number) => {
 const evtCheck = (x: number, y: number): boolean =>  {
     return x == (++y)
 }
-
 let nextStateNumber = 1
 const transitions: Transition<number, number>[] = [
     new Transition(states[0], states[1], evtCheck, printChar),

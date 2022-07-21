@@ -45,11 +45,11 @@ describe('Transition', () => {
 })
 
 describe('Automata', () => {
-    const middleState: State<number> = { label: 2, isFinal: false}
-    const finalState: State<number> = { label: 3, isFinal: true }
+    const middleState: State<number> = new State(2)
+    const finalState: State<number> = new State(3, null, null, true)
     const middleTransition = new Transition(toState, middleState, evt, act)
     const finalTransition = new Transition(middleState, finalState, evt)
-    const wrongTransition = new Transition(toState, { label: 5, isFinal: false}, () => true, null)
+    const wrongTransition = new Transition(toState, new State(5), () => true, null)
     const automata = new Automata(fromState, [fromState, toState, middleState, finalState], [transition, middleTransition, finalTransition])
     const automata2 = new Automata(toState, [fromState, toState], [transition, wrongTransition])
     
@@ -103,5 +103,10 @@ describe('Automata', () => {
 
     test('Step should throw a "StateError"', async () => {
         await expect(automata2.step([],[])).rejects.toThrow(StateError)
+    })
+
+    test('StepAfterTimeout should return false', async () => {
+        await expect(automata.stepAfterTimeout(1000, [])).resolves.toBe(false)
+        expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000)
     })
 })
